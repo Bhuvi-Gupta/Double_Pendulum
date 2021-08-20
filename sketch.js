@@ -8,17 +8,21 @@ var ground;
 var con;
 var ball2;
 var con2;
-
 function setup() {
   createCanvas(800,600);
   engine = Engine.create();
   
   world = engine.world;
-
   var ball_options = {
     restitution: 0.8//bouncing
   }
+  var roof_options={
+		isStatic:true			
+	}
 
+	roof = Bodies.rectangle(400,100,20,10,roof_options);
+    World.add(world,roof);
+    
   ball = Bodies.circle(200,50,10,ball_options);//n the setup function, in sketh.js, using the Bodies.circle function we create the ball. And after createion, we give restitution property to it.
   World.add(world,ball);//After creating a body, we add it to the world.
 
@@ -26,7 +30,7 @@ function setup() {
   World.add(world,ball2);
   
   con = Matter.Constraint.create({//Name spacing contraint also allowed(name spacing is when we use matter.constraint as var)
-          pointA:{x:400,y:20},//This is a constraint between a point and a body. Point is given by the vector(coordinates in {}) and body is the ball
+          pointA:{x:400,y:100},//This is a constraint between a point and a body. Point is given by the vector(coordinates in {}) and body is the ball
           bodyB:ball,
           pointB:{x:0,y:0},
           length:100,
@@ -56,7 +60,7 @@ function draw() {
   Engine.update(engine);
   ellipse(ball.position.x,ball.position.y,10);//In the draw funtion, we draw the ball body using ellipse function.
   ellipse(ball2.position.x,ball2.position.y,12);
-  
+  rect(roof.position.x,roof.position.y,50,20);
   push();
   strokeWeight(2);//boldness
   stroke(255);//color
@@ -68,13 +72,13 @@ function draw() {
   fill("white")
   stroke(0)
   textSize(16)
-  text("Press space to see functioning", 10, 20)
-  text("At smaller angles, the double pendulum works on the principle of sine and cosine*.",10, 500)
-  text("At larger angles, the first pendulum is dragging a weight along with it until the momentum slows down.",10, 520)
+  text("At smaller angles, the double pendulum works on the principle of sine and cosine*. At larger angles, the ",10, 500)
+  text("first pendulum is dragging a weight along with it until the momentum slows down.",10, 520)
   text("*(in trigonometry)Sine is the ratio of opposide upon hypotenuse. Cosine is the ratio of adjacent side upon", 10, 555)
   text(" hypotenuse.", 10, 575)
   textSize(18)
-  text("Double Pendulum", 343, 460)
+  text("Double Pendulum", 340, 60)
+  text("Press space to see functioning", 10, 20)
 }
 
 function keyPressed()
